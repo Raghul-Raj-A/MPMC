@@ -7,7 +7,7 @@
 start:
 CBI DDRB,0 //sets DP 8 as input ICP1
 SBI DDRB,5 //sets LED output
-SBI PORTB,0 // 
+SBI PORTB,0 //enables internal pull up 
 SBI DDRD,6 //sets DP 6 as output OC0A
 SBI PORTD,6 //enables pull-up
 CBI PORTB,5 //initially turns off LED
