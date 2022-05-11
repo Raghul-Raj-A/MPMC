@@ -9,7 +9,7 @@ STS UCSR0A,R16 // 7&6 bits are initially sets to 0 rx & tx flags
 LDI R16,0X18
 STS UCSR0B,R16 //4 & 3 bits are set to 1,to enable rx and tx
 LDI R16,0X86  
-STS UCSR0C,R16 //7 th bit set to 1 for ursel UR Register select and first 3 bits to 011 to set 8 bit
+STS UCSR0C,R16 //7 th bit set to 1 for ursel UR Register select and first 3 bits to 0110 to set 8 bit
 LDI R16,0
 STS UBRR0H,R16 
 LDI R16,0X67
