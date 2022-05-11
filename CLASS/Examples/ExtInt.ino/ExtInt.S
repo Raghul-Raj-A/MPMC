@@ -1,0 +1,31 @@
+#define __SFR_OFFSET 0
+#include "avr/io.h"
+
+.global start
+.global work
+
+start:
+SBI DDRB, 5
+CBI DDBD, 2
+SBI PORTD, 2
+LDI R16, OX40
+OUT GICR, R16
+LDI R17, OX02
+OUT MCUCR, R17
+
+//stack initialisation
+LDI R16, 0X04
+OUT SPH, R16
+LDI R16, 0X5F
+OUT SPL, R16
+
+//JUMPS TO ISR ADDRESS work:
+
+LDS R17, GIFR
+ANDI R17, OX40
+BRNE L1
+SBI PORTB, 5
+
+
+SEI
+L: RJMP L
