@@ -1,0 +1,24 @@
+#define __SFR_OFFSET 0
+#include "avr/io.h"
+
+.global start
+.global work
+
+start:
+SBI DDRB,5
+CBI DDRD,6
+CBI DDRD,7
+LDI R16,0X00
+STS ACSR,R16
+STS SFIOR,R16
+
+work:
+LDS R17,ACSR
+CPI R17,0X20
+BRNE L1
+SBI PORTB,5
+RJMP L2 //RET
+L1:
+  CBI PORTB,5
+L2: 
+  RET
