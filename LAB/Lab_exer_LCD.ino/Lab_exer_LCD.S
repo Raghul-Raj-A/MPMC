@@ -1,0 +1,75 @@
+#define __SFR_OFFSET 0
+
+
+#include "avr/io.h"
+
+.global start
+.global work
+
+
+start:
+
+//Loading stack pointer
+LDI R16,0X04
+OUT SPH,R16
+LDI R16,0X5F
+OUT SPL,R16
+
+LDI R16,0XFF
+OUT DDRD,R16
+LDI R16,0X07
+OUT DDRB,R16
+
+//PIXEL MATRIX 5*7
+//LDI R16,0X38
+//OUT PORTD,R16
+CALL COMMAND
+
+//turn on LED
+LDI R16,0X01
+OUT PORTD,R16
+CALL COMMAND
+
+//cursor ON/cursor Blink
+LDI R16,0X0E
+OUT PORTD,R16
+CALL COMMAND 
+
+
+
+work:
+
+//DATA
+LDI R16,0X41
+OUT PORTD,R16
+CALL DATA
+LDI R16,0X43
+OUT PORTD,R16
+CALL DATA
+LDI R16,'B'
+OUT PORTD,R16
+CALL DATA
+L: RJMP L 
+
+COMMAND:
+        LDI R16,0X01
+        OUT PORTB,R16
+        LDI R16,0X00
+        OUT PORTB,R16
+        CALL DELAY
+        RET
+DATA:
+        LDI R20,0X03
+        OUT PORTB,R20
+        LDI R20,0X02
+        OUT PORTB,R20
+        CALL DELAY
+        RET
+DELAY:
+        LDI R17,0XFF
+        L1: LDI R18,0XFF
+        L2: DEC R18
+        BRNE L2
+        DEC R17
+        BRNE L1
+        RET
