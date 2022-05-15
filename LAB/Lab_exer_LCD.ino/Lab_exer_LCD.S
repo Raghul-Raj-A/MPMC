@@ -1,11 +1,29 @@
 #define __SFR_OFFSET 0
-
-
 #include "avr/io.h"
 
 .global start
 .global work
 
+/*
+ * ##CONNECTIONS
+ * 
+ * VSS - GND
+ * VDD - 5V
+ * VEE - GND(CONTRAST)
+ * RS - PB1 (9)
+ * R/W - PB2(10)
+ * E - PB0(8)
+ * D0 
+ * D1
+ * D2
+ * D3    -- PD0-PD7
+ * D4
+ * D5
+ * D6
+ * D7
+ * A - 5V
+ * K - GND
+ *//
 
 start:
 
@@ -15,9 +33,9 @@ OUT SPH,R16
 LDI R16,0X5F
 OUT SPL,R16
 
-LDI R16,0XFF
-OUT DDRD,R16
-LDI R16,0X07
+LDI R16,0XFF //Sets all pin as output 
+OUT DDRD,R16 
+LDI R16,0X07 //sets PB 0,1,2 as output
 OUT DDRB,R16
 
 //PIXEL MATRIX 5*7
@@ -25,7 +43,7 @@ OUT DDRB,R16
 //OUT PORTD,R16
 CALL COMMAND
 
-//turn on LED
+//turn on LCD
 LDI R16,0X01
 OUT PORTD,R16
 CALL COMMAND
@@ -51,6 +69,7 @@ OUT PORTD,R16
 CALL DATA
 L: RJMP L 
 
+//default🙂
 COMMAND:
         LDI R16,0X01
         OUT PORTB,R16
