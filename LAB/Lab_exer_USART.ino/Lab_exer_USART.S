@@ -24,7 +24,7 @@ BREQ work
 ORI R16,0X80 //resets the flag
 STS UCSR0A,R16
 LDS R17,UDR0 // load data to R17
-INC R17
+DEC R17
 STS UDR0,R17 //store manipulated data to UDR0
 
 L1: LDS R17,UCSR0A

@@ -5,10 +5,10 @@
 .global work
 
 start:
-CBI DDRB,0 //sets DP 8 as input ICP1
-SBI DDRB,5 //sets LED output
+CBI DDRB,0  //sets DP 8 as input ICP1
+SBI DDRB,5  //sets LED output
 SBI PORTB,0 //enables internal pull up 
-SBI DDRD,6 //sets DP 6 as output OC0A
+SBI DDRD,6  //sets DP 6 as output OC0A
 SBI PORTD,6 //enables pull-up
 CBI PORTB,5 //initially turns off LED
 
@@ -21,9 +21,9 @@ OUT TCCR0A,R17
 LDI R17,0X01 // 001 no pre-scaling
 OUT TCCR0B,R17
 
-LDI R17,0XF0 //Threshold : 7D :: CHECK BY +- THRESHOLD
+LDI R17,0X7a //Threshold : 7D :: CHECK BY +- THRESHOLD
 OUT OCR0A,R17 //it'll generate waveform output on OC0A pin
-LDI R18,0X41 //CHANGED :: PS DOESN'T MATTERS
+LDI R18,0X41 //CHANGED :: PS DOESN'T MATTERS, enables interrupt capture edge select
 STS TCCR1B,R18 // set 6th bit to 1 to enable input capture edge,and PS 8 010
 
 L:
