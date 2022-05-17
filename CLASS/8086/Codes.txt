@@ -1,0 +1,96 @@
+Code Convertion (BCD to Hex)
+
+MOV BL,14
+MOV AL,BL
+AND BL,0F
+
+MOV CL,AL
+AND CL,F0
+
+ROR CL,1
+ROR CL,1
+ROR CL,1
+ROR CL,1
+
+MOV AL,CL
+MOV DL,0A
+MUL DL
+ADD AL,BL
+INT 3(break point interrupt)
+
+######################################################################
+
+DAC
+
+Square waveform generator
+
+MOV AL,80
+MOV DX,0FFE6
+OUT DX,AL
+
+L:
+	
+MOV AL,00
+MOV DX,0FFE0
+OUT DX,AL
+CALL 3000
+MOV AL,FF
+MOV DX,0FFE0
+OUT DX,AL
+CALL 3000
+JMP L
+
+3000:
+MOV CL,FF
+L:DEC L
+JNZ L
+RET
+
+OR
+
+LOOP 3003
+RET
+
+*************
+
+Triangular waveform generator
+
+MOV AL,80
+MOV DX,0FFE6
+OUT DX,AL
+L2: 
+MOV AL,00
+MOV DX,0XFFE0
+L:
+OUT DX,AL
+INC AL
+CMP AL,99
+JNZ L
+L1:
+OUT DX,AL
+DEC AL
+CMP AL,00
+JNZ L1
+JNZ L2
+
+#########################################################################
+
+Stepper motor
+
+MOV AL,80
+MOV DX,0FFE6
+OUT DX,AL
+MOV AL,11 :: 22/33/44
+MOV DX,0FFE0
+L3:
+OUT DX,AL
+CALL 3000
+ROR AL,1    // ROL AL,1
+JMP L3
+
+3000:
+MOV CL,FF
+L:DEC L
+JNZ L
+RET
+

@@ -23,14 +23,14 @@ OUT TCCR0B,R17
 
 LDI R17,0X7a //Threshold : 7D :: CHECK BY +- THRESHOLD
 OUT OCR0A,R17 //it'll generate waveform output on OC0A pin
-LDI R18,0X41 //CHANGED :: PS DOESN'T MATTERS, enables interrupt capture edge select
+LDI R18,0X41 //CHANGED :: PS DOESN'T MATTERS, enables interrupt capture edge select rising edge with no pre scalar
 STS TCCR1B,R18 // set 6th bit to 1 to enable input capture edge,and PS 8 010
 
 L:
 SBIS TIFR1,5 //checks the 5th bit if flag is set or not 
 RJMP L
 SBI TIFR1,5 //resets the flag
-LDI R16,0X01
+LDI R16,0X01//falling edge with no pre-scalar
 STS TCCR1B,R16 // set to no PS
 
 L1:
