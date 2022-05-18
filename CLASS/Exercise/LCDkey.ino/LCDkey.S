@@ -2,7 +2,7 @@
 # include "avr/io.h"
 
 .global start
-.global work
+.global work 
 
 start:
 SBI DDRB,5 //Led Output
@@ -60,7 +60,7 @@ LCD:
 LDI R16,0XFF //Sets all pin as output 
 OUT DDRD,R16 
 LDI R16,0X07 //sets PB 0,1,2 as output
-OUT DDRB,R16
+OUT DDRC,R16
 
 //PIXEL MATRIX 5*7
 LDI R16,0X38
@@ -118,16 +118,16 @@ RET
 
 COMMAND:
         LDI R16,0X01
-        OUT PORTB,R16
+        OUT PORTC,R16
         LDI R16,0X00
-        OUT PORTB,R16
+        OUT PORTC,R16
         CALL DELAY
         RET
 DATA:
         LDI R20,0X03
-        OUT PORTB,R20
+        OUT PORTC,R20
         LDI R20,0X02
-        OUT PORTB,R20
+        OUT PORTC,R20
         CALL DELAY
         RET
 DELAY:
@@ -163,9 +163,9 @@ MEMORY POINTERS:
  * VSS - GND
  * VDD - 5V
  * VEE - GND(CONTRAST)
- * RS - PB1 (9)
- * R/W - PB2(10)
- * E - PB0(8)
+ * RS - PC1 (9)
+ * R/W - PC2(10)
+ * E - PC0(8)
  * D0 
  * D1
  * D2
