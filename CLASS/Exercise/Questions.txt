@@ -17,6 +17,6 @@ Computer generated questions, ignore typographical errors.
 
 out of portion
 
-Write an ALP using at night to configure ADC input. if Analogue voltage is one v. Turn on led and 2 v 2 LED.
+Write an ALP using atmega8 to configure ADC input. if Analogue voltage is one v. Turn on led and 2 v 2 LED.
 
-write and ALP using at atmega 8. to convert the given analogue value into 10 bit digital Equivalent.. Consider PC not as input.
+write and ALP using atmega 8. to convert the given analogue value into 10 bit digital Equivalent Consider PC0 not as input.
