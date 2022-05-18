@@ -132,11 +132,11 @@ DATA:
         RET
 DELAY:
         LDI R17,0XFF
-        L1: LDI R18,0XFF
-        L2: DEC R18
-        BRNE L2
+        L8: LDI R18,0XFF
+        L9: DEC R18
+        BRNE L9
         DEC R17
-        BRNE L1
+        BRNE L8
         RET
 
 MEMORY POINTERS:
