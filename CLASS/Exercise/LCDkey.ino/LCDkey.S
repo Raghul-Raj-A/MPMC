@@ -1,1 +1,179 @@
+# define __SFR_OFFSET 0
+# include "avr/io.h"
 
+.global start
+.global work
+
+start:
+SBI DDRB,5 //Led Output
+CBI DDRB,0 //DP 8  input
+CBI DDRB,1 //DP 9  input
+SBI DDRB,2 //DP 10 output
+SBI DDRB,3 //DP 11 output
+SBI PORTB,0 //enabling pull-up  
+SBI PORTB,1 //""
+
+//Loading stack pointer
+LDI R16,0X04
+OUT SPH,R16
+LDI R16,0X5F
+OUT SPL,R16
+
+work:
+CBI PORTB,2 //clearing DP 10
+SBI PORTB,3 //enabling DP 11
+IN R16,PINB //getting status of PINB 
+ANDI R16,0X0F //sets msb to 0
+CPI R16,0X0A  //checks key "1" nibble 1010 
+BRNE L1
+CALL LCD
+RJMP L4
+
+L1:
+CPI R16,0X09 // check key "4" nibble 1001 
+BRNE L2
+CALL SASTRA
+RJMP L4
+
+L2:
+CBI PORTB,3
+SBI PORTB,2
+
+IN R16,PINB
+ANDI R16,0X0F
+CPI R16,0X06 //check key "2" nibble 0110
+BRNE L3
+CALL MCT
+RJMP L4
+
+L3:
+CPI R16,0X05 //checks key "5" nibble 0101
+BRNE L45
+CALL VKJ
+
+L4:
+RJMP work
+
+
+LCD:
+
+LDI R16,0XFF //Sets all pin as output 
+OUT DDRD,R16 
+LDI R16,0X07 //sets PB 0,1,2 as output
+OUT DDRB,R16
+
+//PIXEL MATRIX 5*7
+LDI R16,0X38
+OUT PORTD,R16
+CALL COMMAND
+
+//turn on LCD
+LDI R16,0X01
+OUT PORTD,R16
+CALL COMMAND
+
+//cursor ON/cursor Blink
+LDI R16,0X0E
+OUT PORTD,R16
+CALL COMMAND 
+
+SASTRA:
+
+LDI R26,0X60
+CLR R27
+LDI R16,0X06
+L5:
+LDS R17,X+
+OUT PORTD,R17
+CALL DATA
+DEC R16          //OR CPI R26,0X66 LOOPS TILL ZERO FLAG IS ATTAIN
+BRNE L5
+RET
+
+MCT:
+
+LDI R26,0X70
+CLR R27
+LDI R16,0X03
+L6:
+LDS R17,X+
+OUT PORTD,R17
+CALL DATA
+DEC R16
+BRNE L6
+RET
+
+VKJ:
+
+LDI R26,0X80
+CLR R27
+LDI R16,0X03
+L7:
+LDI R17,X+
+OUT PORTD,R17
+CALL DATA
+DEC R16
+BRNE L7
+RET
+
+COMMAND:
+        LDI R16,0X01
+        OUT PORTB,R16
+        LDI R16,0X00
+        OUT PORTB,R16
+        CALL DELAY
+        RET
+DATA:
+        LDI R20,0X03
+        OUT PORTB,R20
+        LDI R20,0X02
+        OUT PORTB,R20
+        CALL DELAY
+        RET
+DELAY:
+        LDI R17,0XFF
+        L1: LDI R18,0XFF
+        L2: DEC R18
+        BRNE L2
+        DEC R17
+        BRNE L1
+        RET
+
+MEMORY POINTERS:
+
+0X60 - 'S'
+0X61 - 'A'
+0X62 - 'S'
+0X63 - 'T'
+0X64 - 'R'
+0X65 - 'A'
+
+0X70 - 'M'
+0X71 - 'C'
+0X72 - 'T'
+
+0X80 - 'V'
+0X81 - 'K'
+0X82 - 'J' 
+
+
+/*
+ * ##CONNECTIONS
+ * 
+ * VSS - GND
+ * VDD - 5V
+ * VEE - GND(CONTRAST)
+ * RS - PB1 (9)
+ * R/W - PB2(10)
+ * E - PB0(8)
+ * D0 
+ * D1
+ * D2
+ * D3    -- PD0-PD7
+ * D4
+ * D5
+ * D6
+ * D7
+ * A - 5V
+ * K - GND
+ */
