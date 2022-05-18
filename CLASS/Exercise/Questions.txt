@@ -1,0 +1,22 @@
+Disclaimer :
+Computer generated questions, ignore typographical errors.
+
+
+1) Write an LP using at ATmega8 to display the first 4 characters in LCD in second row, 4th column.
+
+2)write an ALP using Atmega 8 when key connected in external interrupts Zero, goes from zero to one rising edge, timer should switch on after 200 microseconds and to display first letter of your characters.
+
+3)Write an ALP using ATMA 8 to configure analogue comparator when voltage across PD6 is greater than P7, should switch on led on PC not and vice versa.
+
+4)Write an ALP using Atmega 8 to turn on a timer in external interrupt is triggered. Rising Edge on timer overflow switch on the analogue comparator and when the voltage across P7 is high. Switch on the LED connector to PB 5.using interrupt
+
+5)write an ALP to configure for every falling edge print character on LCD last 2 digits of register number, first 2 digits of your name. Use array memory pointer.
+
+6)Write an ALP using atmega 8 to configure 2 cross 2 keypad with LCD module. To configure Key a is on. Turn on LCD when b is on. Print Sastra when c is on. Print MCT when d is on print vkj.
+
+
+out of portion
+
+Write an ALP using at night to configure ADC input. if Analogue voltage is one v. Turn on led and 2 v 2 LED.
+
+write and ALP using at atmega 8. to convert the given analogue value into 10 bit digital Equivalent.. Consider PC not as input.
