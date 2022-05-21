@@ -1,0 +1,14 @@
+MOV AL,33
+MOV BL,11
+
+AND AL,BL
+
+OR L,BL
+
+NOT BL
+
+NEG BL
+
+XOR AL,BL
+
+NOT AL
