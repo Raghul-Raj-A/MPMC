@@ -5,7 +5,7 @@
 .global work
 
 start:
-SBI DDRB,1 //sets DP 9 as output
+SBI DDRB,1 //sets DP 9 as output CONTAINS OC1A
 CBI DDRD,2 //sets DP 2 as input
 SBI PORTD,2// enables pull-up
 SBI DDRB,5 //LED as output
