@@ -3,7 +3,7 @@ MOV BL,11
 
 AND AL,BL
 
-OR L,BL
+OR AL,BL
 
 NOT BL
 
