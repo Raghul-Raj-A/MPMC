@@ -1,0 +1,19 @@
+;Triangular waveform generator
+
+MOV AL,80
+MOV DX,0FFE6
+OUT DX,AL
+L2: 
+MOV AL,00
+MOV DX,0XFFE0
+L:
+OUT DX,AL
+INC AL
+CMP AL,99
+JNZ L
+L1:
+OUT DX,AL
+DEC AL
+CMP AL,00
+JNZ L1
+JNZ L2
