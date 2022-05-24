@@ -29,13 +29,13 @@ INT 3
 
 ;MULTIPLICATION
 ;8 bit                  16 bit
-MOV AL,20               MOV AX,20              
-MOV BL,32               MOV BX,32
+MOV AL,20               MOV AX,2000              
+MOV BL,32               MOV BX,0032
 MUL BL                  MUL BX
 INT 3                   INT 3
 
 ;DIVISION
-MOV AX,2244
-MOV BL,22
-DIV BL
+MOV AX,2244   ;(DX*AX)/BX  -- 16 BIT  
+MOV BL,22      ;QUO - AX : REM - DX (32/16)
+DIV BL         ;QUO - AL : REM - AH (16/8)
 INT 3
