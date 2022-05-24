@@ -30,8 +30,8 @@ INT 3
 ;MULTIPLICATION
 ;8 bit                  16 bit
 MOV AL,20               MOV AX,2000              
-MOV BL,32               MOV BX,0032
-MUL BL                  MUL BX
+MOV DL,32               MOV BX,0032
+MUL DL                  MUL BX
 INT 3                   INT 3
 
 ;DIVISION

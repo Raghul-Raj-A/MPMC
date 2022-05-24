@@ -1,12 +1,12 @@
 ;Code Convertion (BCD to Hex)
-
+;LOGIC :: MSB*10(0A)+LSB
 MOV BL,14
 MOV AL,BL
 AND BL,0F
 
 MOV CL,AL
 AND CL,F0
-
+     00000001
 ROR CL,1
 ROR CL,1
 ROR CL,1
