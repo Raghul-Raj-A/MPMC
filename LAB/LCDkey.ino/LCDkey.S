@@ -39,11 +39,11 @@ LDI R16,0X07 //sets PB 0,1,2 as output
 OUT DDRB,R16
 
 //PIXEL MATRIX 5*7
-//LDI R16,0X38
-//OUT PORTD,R16
+LDI R16,0X38
+OUT PORTD,R16
 CALL COMMAND
 
-//turn on LCD
+//clears the screen
 LDI R16,0X01
 OUT PORTD,R16
 CALL COMMAND
@@ -53,41 +53,98 @@ LDI R16,0X0E
 OUT PORTD,R16
 CALL COMMAND 
 
+//KEYPAD
+SBI DDRB,5 //Led Output
+CBI DDRC,0 //AP 0  input
+CBI DDRC,1 //AP 1  input
+SBI DDRC,2 //AP 2 output
+SBI DDRC,3 //AP 3 output
+SBI PORTC,0 //enabling pull-up  
+SBI PORTC,1 //""
 
+/*
+ * KP  AP
+ * 7    A0
+ * 6    A1
+ * 3    A2
+ * 4    A3
+ */
 
 work:
 
-//DATA
-/*LDI R16,0X41
-OUT PORTD,R16
+// KEYPAD
+
+CBI PORTC,2
+SBI PORTC,3
+IN R16,PINC
+ANDI R16,0x0F
+
+CPI R16,0x0A
+BRNE L5
+
+//CALL A
+LDI R18,'1'
+OUT PORTD,R18
 CALL DATA
-LDI R16,0X43
-OUT PORTD,R16
+RJMP L8
+
+L5:
+CPI R16,0x09
+BRNE L6
+
+//CALL B
+LDI R18,'3'
+OUT PORTD,R18
 CALL DATA
-LDI R16,'B'
-OUT PORTD,R16
-CALL DATA*/
-LDI R16,'R'
-OUT PORTD,R16
+RJMP L8
+
+L6:
+CBI PORTC,3
+SBI PORTC,2
+IN R16,PINC
+ANDI R16,0x0F
+
+CPI R16,0x06
+BRNE L7
+
+//CALL C
+LDI R18,'2'
+OUT PORTD,R18
 CALL DATA
-LDI R16,'A'
-OUT PORTD,R16
+RJMP L4
+
+L7:
+CPI R16,0x05
+BRNE L8
+
+//CALL D
+LDI R18,'4'
+OUT PORTD,R18
 CALL DATA
-LDI R16,'G'
-OUT PORTD,R16
-CALL DATA
-LDI R16,0X4A
-OUT PORTD,R16
-CALL DATA
-LDI R16,'U'
-OUT PORTD,R16
-CALL DATA
-LDI R16,'L'
-OUT PORTD,R16
-CALL DATA
+L8:
+RJMP work
+
 L: RJMP L 
 
-//default
+//Functions
+
+A:LDI R18,'1'
+  OUT PORTD,R18
+  CALL DATA
+
+B:LDI R18,'3'
+  OUT PORTD,R18
+  CALL DATA
+
+C:LDI R18,'2'
+  OUT PORTD,R18
+  CALL DATA
+
+D:LDI R18,'4'
+  OUT PORTD,R18
+  CALL DATA
+
+
 COMMAND:
         LDI R16,0X01
         OUT PORTB,R16
@@ -110,45 +167,3 @@ DELAY:
         DEC R17
         BRNE L1
         RET
-
-
-/* 
-Hex Code Command to LCD Instruction Register
-
-0F LCD ON, cursor ON
-
-01  Clear display screen
-
-02  Return home
-
-04  Decrement cursor (shift cursor to left)
-
-06  Increment cursor (shift cursor to right)
-
-05  Shift display right
-
-07  Shift display left
-
-0E  Display ON, cursor blinking
-
-80  Force cursor to beginning of first line
-
-C0  Force cursor to beginning of second line
-
-38  2 lines and 5×7 matrix
-
-83  Cursor line 1 position 3
-
-3C  Activate second line
-
-08  Display OFF, cursor OFF
-
-C1  Jump to second line, position 1
-
-OC  Display ON, cursor OFF
-
-C1  Jump to second line, position 1
-
-C2  Jump to second line, position 2
-
-*/

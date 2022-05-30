@@ -1,0 +1,83 @@
+#define __SFR_OFFSET 0
+#include "avr/io.h"
+
+.global start
+.global work
+
+start:
+//Loading stack pointer
+LDI R16,0X04
+OUT SPH,R16
+LDI R16,0X5F
+OUT SPL,R16
+
+LDI R16,0XFF //Sets all pin as output 
+OUT DDRD,R16 
+LDI R16,0X07 //sets PB 0,1,2 as output
+OUT DDRB,R16
+
+//PIXEL MATRIX 5*7
+//LDI R16,0X38
+//OUT PORTD,R16
+CALL COMMAND
+
+//turn on LCD
+LDI R16,0X01
+OUT PORTD,R16
+CALL COMMAND
+
+//cursor ON/cursor Blink
+LDI R16,0X0E
+OUT PORTD,R16
+CALL COMMAND 
+
+//Timer
+LDI R16,0X00
+STS TCCR1A,R16
+LDI R16,0X04
+STS TCCR1B,R16
+LDI R16,0X0B
+STS TCNT1H,R16
+LDI R16,0XDC
+STS TCNT1L,R16
+
+work:
+L3:SBIS TIFR1,0
+  RJMP L3
+  SBI TIFR1,0
+  LDI R17,'A'
+  OUT PORTD,R17
+  CALL DATA
+
+L4:SBIS TIFR1,0
+  RJMP L4
+  SBI TIFR1,0
+  LDI R17,'B'
+  OUT PORTD,R17
+  CALL DATA
+
+  
+//code here
+
+COMMAND:
+        LDI R16,0X01
+        OUT PORTB,R16
+        LDI R16,0X00
+        OUT PORTB,R16
+        CALL DELAY
+        RET
+DATA:
+        LDI R20,0X03
+        OUT PORTB,R20
+        LDI R20,0X02
+        OUT PORTB,R20
+        CALL DELAY
+        RET
+DELAY:
+        LDI R17,0XFF
+        L1: LDI R18,0XFF
+        L2: DEC R18
+        BRNE L2
+        DEC R17
+        BRNE L1
+        RET
