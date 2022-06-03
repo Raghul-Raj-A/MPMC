@@ -1,0 +1,34 @@
+CBI DDRB,0        //configure PB0 as I/P
+
+//Stack pointer initialisation
+LDI R16,0X04	
+OUT SPH,R16
+LDI R16,0X5F
+OUT SPL,R16
+
+LDI R26,0X70	//X memory pointer initialisation  
+CLR R27
+LDI R16,0X20	//enable IC interrupt enable
+OUT TIMSK,R16
+OUT TIFR,R16	//clearing ICF
+LDI R16,0X00	
+OUT TCCR1A,R16	//clearing TCCR1A
+LDI R16,0X41	//edge select = 1;rising edge;clock source enabled
+OUT TCCR1B,R16
+SEI			//enables global interrupt
+L:RJMP L
+
+L3:
+IN R18,ICR1L
+IN R19,ICR1H
+ST X+,R18
+ST x+,R19
+IN R0,TCCR1B
+LDI R21,0X40
+EOR R0,R21
+OUT TCCR1B,R0
+CPI R26,0X76
+BRNE L5
+LDI R17,0
+OUT TIMSK,R17
+L5:RETI

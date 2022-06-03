@@ -28,7 +28,8 @@
  */
 
 start:
-
+SBI DDRB,5
+CBI PORTB,5
 //Loading stack pointer
 LDI R16,0X04
 OUT SPH,R16
