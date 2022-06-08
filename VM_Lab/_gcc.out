@@ -1,0 +1,20 @@
+set -e; avr-gcc -MM -mmcu=atmega8 -I. -O0 -gstabs -std=gnu99  -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums  -Wall -Wstrict-prototypes  -Wa,-adhlns=prog2.lst   prog2.c \
+	| sed 's,\(.*\)\.o[ :]*,\1.o \1.d : ,g' > prog2.d; \
+	[ -s prog2.d ] || rm -f prog2.d
+
+-------- begin --------
+avr-gcc (WinAVR 20100110) 4.3.3
+Copyright (C) 2008 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+Compiling: prog2.c
+avr-gcc -c -mmcu=atmega8 -I. -O0 -gstabs -std=gnu99  -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums  -Wall -Wstrict-prototypes  -Wa,-adhlns=prog2.lst   prog2.c -o prog2.o
+In file included from prog2.c:9:
+c:/winavr/lib/gcc/../../avr/include/avr\signal.h:36:2: warning: #warning "This header file is obsolete.  Use <avr/interrupt.h>."
+prog2.c: In function 'main':
+prog2.c:39: error: 'a' undeclared (first use in this function)
+prog2.c:39: error: (Each undeclared identifier is reported only once
+prog2.c:39: error: for each function it appears in.)
+make: *** [prog2.o] Error 1

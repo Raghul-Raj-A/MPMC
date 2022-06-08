@@ -1,0 +1,17 @@
+Creating   'icu.eep'
+Creating   'icu.hex'
+Creating   'icu.obj'
+Creating   'icu.lis'
+Creating   'icu.map'
+
+Assembling 'icu.asm'
+Including  'C:\VMLAB\include\m8def.inc'
+
+Program memory usage:
+Code             :   46 words
+Constants (dw/db):    0 words
+Unused           :    0 words
+Total            :   46 words
+
+Assembly complete with no errors.
+Deleting   'icu.eep'
