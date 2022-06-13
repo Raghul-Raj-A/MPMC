@@ -1,0 +1,17 @@
+Creating   'asn.eep'
+Creating   'asn.hex'
+Creating   'asn.obj'
+Creating   'asn.lis'
+Creating   'asn.map'
+
+Assembling 'asn.asm'
+Including  'C:\VMLAB\include\m8def.inc'
+
+Program memory usage:
+Code             :  123 words
+Constants (dw/db):    0 words
+Unused           :    0 words
+Total            :  123 words
+
+Assembly complete with no errors.
+Deleting   'asn.eep'
